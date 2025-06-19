@@ -153,7 +153,6 @@ namespace MauiChat
         /// simulating the typical message delivery process in chat applications.
         /// </summary>
         /// <param name="messageObj">The message object to update. Must be of type <see cref="TextMessage"/>.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
         private async void UpdateDeliveryStatesIfCurrentUser(TextMessage messageObj)
         {
             if (messageObj.Author == CurrentUser)
