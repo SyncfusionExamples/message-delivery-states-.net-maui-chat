@@ -4,7 +4,8 @@
              xmlns:sfChat="clr-namespace:Syncfusion.Maui.Chat;assembly=Syncfusion.Maui.Chat"
              xmlns:syncTheme="clr-namespace:Syncfusion.Maui.Themes;assembly=Syncfusion.Maui.Core"
              xmlns:local="clr-namespace:MauiChat"
-             x:Class="MauiChat.MainPage">
+             x:Class="MauiChat.MainPage"
+             x:DataType="local:ChatViewModel">
 
     <ContentPage.BindingContext>
         <local:ChatViewModel/>
