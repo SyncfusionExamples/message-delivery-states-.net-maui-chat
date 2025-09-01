@@ -4,6 +4,65 @@
 
 ```xaml
 
+    <sfChat:SfChat x:Name="sfChat"
+            Messages="{Binding Messages}"
+            CurrentUser="{Binding CurrentUser}"
+            SendMessageCommand="{Binding SendMessageCommand}"
+            ShowDeliveryState="True"/>
+
+ViewModel:
+
+    private async void GenerateMessages()
+    {
+        var initialMessage = new TextMessage
+        {
+            Author = currentUser,
+            Text = "Hi guys, good morning! I'm very delighted to share with you the news that our team is going to launch a new mobile application.",
+            DeliveryState = Syncfusion.Maui.Chat.DeliveryStates.Sent,
+        };
+        messages.Add(initialMessage);
+        UpdateDeliveryStatesIfCurrentUser(initialMessage);
+
+        var responses = new[]
+        {
+            new TextMessage
+            {
+                Author = new Author { Name = "Andrea", Avatar = "peoplecircle16.png" },
+                Text = "Oh! That's great."
+            },
+            new TextMessage
+            {
+                Author = new Author { Name = "Harrison", Avatar = "peoplecircle14.png" },
+                Text = "That is good news."
+            }
+        };
+
+        foreach (var response in responses)
+        {
+             await Task.Delay(1000).ConfigureAwait(true);
+            messages.Add(response);
+        }
+    }
+
+    private void ExecuteSendMessageCommand(object sender)
+    {
+        if (sender is SendMessageEventArgs eventArgs && eventArgs.Message is TextMessage message)
+        {
+            message.DeliveryState = Syncfusion.Maui.Chat.DeliveryStates.Sent;
+            UpdateDeliveryStatesIfCurrentUser(message);
+        }
+    }
+
+    private async void UpdateDeliveryStatesIfCurrentUser(TextMessage messageObj)
+    {
+        if (messageObj.Author == CurrentUser)
+        {
+            await Task.Delay(1000).ConfigureAwait(true);
+            messageObj.DeliveryState = Syncfusion.Maui.Chat.DeliveryStates.Delivered;
+            await Task.Delay(1000).ConfigureAwait(true);
+            messageObj.DeliveryState = Syncfusion.Maui.Chat.DeliveryStates.Read;
+        }
+    }
 
 ```
 
